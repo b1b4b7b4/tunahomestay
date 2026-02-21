@@ -1,0 +1,19 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+* {
+	font-family: 'Open Sans', sans-serif;
+}
+
+body:has(.noscroll) {
+	overscroll-behavior: none;
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+	overflow: hidden;
+}
+
+img {
+	user-select: none;
+	pointer-events: none;
+}
