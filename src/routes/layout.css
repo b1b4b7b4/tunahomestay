@@ -17,3 +17,8 @@ img {
 	user-select: none;
 	pointer-events: none;
 }
+
+body {
+	color: black;
+	background-color: #fefcf2;
+}

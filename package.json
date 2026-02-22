@@ -34,6 +34,7 @@
 	"dependencies": {
 		"@lucide/svelte": "^0.575.0",
 		"@neondatabase/serverless": "^1.0.2",
-		"clsx": "^2.1.1"
+		"clsx": "^2.1.1",
+		"embla-carousel-svelte": "^8.6.0"
 	}
 }
