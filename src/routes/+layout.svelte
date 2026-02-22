@@ -4,8 +4,24 @@
 	import Header from "$lib/components/Header.svelte";
 	import { fade } from "svelte/transition";
 	import Contact from "$lib/components/Contact.svelte";
+	import { ChevronUp } from "@lucide/svelte";
+	import { onMount } from "svelte";
+	import SimpleButton from "$lib/ui/SimpleButton.svelte";
 
 	let { children } = $props();
+	let showScrollUp = $state(false);
+
+	onMount(() => {
+		const handleScroll = () => {
+			showScrollUp = window.scrollY > 200;
+		};
+		window.addEventListener("scroll", handleScroll);
+		return () => window.removeEventListener("scroll", handleScroll);
+	});
+
+	const scrollToTop = () => {
+		window.scrollTo({ top: 0, behavior: "smooth" });
+	};
 </script>
 
 <svelte:head>
@@ -37,3 +53,18 @@
 </div>
 
 <Contact />
+
+{#if showScrollUp}
+	<div
+		transition:fade={{ duration: 200 }}
+		class="fixed bottom-5 max-md:right-5 md:left-1/2 md:transform md:-translate-x-1/2 z-50"
+	>
+		<SimpleButton
+			variant="primary"
+			onclick={scrollToTop}
+			aria-label="Scroll to top"
+		>
+			<ChevronUp size={20} />
+		</SimpleButton>
+	</div>
+{/if}

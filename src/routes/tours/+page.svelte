@@ -173,23 +173,3 @@
 		</div>
 	</div>
 </div>
-
-<style>
-	.tour-card {
-		position: relative;
-		overflow: hidden;
-	}
-	.tour-card::before {
-		content: "";
-		position: absolute;
-		inset: 0;
-		background-image: var(--bg-image);
-		background-size: cover;
-		background-position: center;
-		transition: transform 0.3s ease;
-		z-index: -1;
-	}
-	.tour-card:hover::before {
-		transform: scale(1.05);
-	}
-</style>

@@ -19,8 +19,6 @@
 		"perfect location great value",
 	];
 
-
-
 	const mainImages = [
 		{
 			src: "https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
@@ -88,8 +86,6 @@
 		image:
 			"https://static.tildacdn.ink/tild3733-6364-4134-b662-633834313832/computer_workplace_s.svg",
 	});
-
-
 </script>
 
 <section
@@ -102,7 +98,7 @@
 	></div>
 
 	<div
-		class="z-1 text-[46px] px-5 md:px-[20px] min-h-[500px] font-semibold text-shadow-2xs mb-16 md:mb-[100px]"
+		class="z-1 text-[46px] px-5 md:px-[20px] min-h-[500px] font-semibold text-shadow-lg mb-16 md:mb-[100px]"
 	>
 		<h1 class="uppercase">Experience your ways!</h1>
 
