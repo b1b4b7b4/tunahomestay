@@ -7,6 +7,7 @@
 	import { ChevronUp } from "@lucide/svelte";
 	import { onMount } from "svelte";
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
+	import ViewAnimation from "$lib/ui/ViewAnimation.svelte";
 
 	let { children } = $props();
 	let showScrollUp = $state(false);
@@ -52,7 +53,9 @@
 	{@render children()}
 </div>
 
-<Contact />
+<ViewAnimation yFrom={50} duration={700}>
+	<Contact />
+</ViewAnimation>
 
 {#if showScrollUp}
 	<div
