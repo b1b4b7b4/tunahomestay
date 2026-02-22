@@ -46,3 +46,19 @@ body {
 .tour-card:hover::before {
 	transform: scale(1.05);
 }
+
+.bounce {
+	animation: bounce 3s ease-in-out infinite;
+}
+
+@keyframes bounce {
+
+	0%,
+	100% {
+		transform: translateY(0);
+	}
+
+	50% {
+		transform: translateY(10px);
+	}
+}

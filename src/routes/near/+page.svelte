@@ -1,34 +1,13 @@
 <script>
+	import { page } from "$app/state";
+	import { differetTypes } from "$lib";
+	import NearTypes from "$lib/components/NearTypes.svelte";
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
 	import { ChevronsDown } from "@lucide/svelte";
 	import clsx from "clsx";
 	import { onMount } from "svelte";
 
 	let scrollY = $state(0);
-
-	const differetTypes = [
-		{
-			title: "All",
-		},
-		{
-			title: "05 min",
-		},
-		{
-			title: "10 min",
-		},
-		{
-			title: "15 min",
-		},
-		{
-			title: "20 min",
-		},
-		{
-			title: "25 min",
-		},
-		{
-			title: "30 min",
-		},
-	];
 
 	const list = [
 		{
@@ -134,13 +113,7 @@
 </div>
 
 <div class="container max-w-[1200px] m-auto px-5">
-	<div
-		class="py-12 md:py-[75px] flex gap-2 md:gap-[10px] justify-center flex-wrap"
-	>
-		{#each differetTypes as type}
-			<SimpleButton variant="primary" c={clsx()}>{type.title}</SimpleButton>
-		{/each}
-	</div>
+	<NearTypes />
 
 	<div
 		class="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-[40px]"
@@ -172,18 +145,3 @@
 		{/each}
 	</div>
 </div>
-
-<style>
-	.bounce {
-		animation: bounce 3s ease-in-out infinite;
-	}
-	@keyframes bounce {
-		0%,
-		100% {
-			transform: translateY(0);
-		}
-		50% {
-			transform: translateY(10px);
-		}
-	}
-</style>
