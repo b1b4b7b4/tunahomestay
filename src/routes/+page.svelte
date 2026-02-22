@@ -7,9 +7,9 @@
 	import NameBlock from "$lib/ui/NameBlock.svelte";
 	import RunningLine from "$lib/ui/RunningLine.svelte";
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
+	import TypingAnimation from "$lib/ui/TypingAnimation.svelte";
 	import { Menu, Search, X } from "@lucide/svelte";
 	import clsx from "clsx";
-	import { onMount } from "svelte";
 	import { fade, fly } from "svelte/transition";
 
 	const texts = [
@@ -19,10 +19,7 @@
 		"perfect location great value",
 	];
 
-	let currentText = $state("");
-	let currentIndex = $state(0);
-	let isTyping = $state(true);
-	let charIndex = $state(0);
+
 
 	const mainImages = [
 		{
@@ -92,87 +89,11 @@
 			"https://static.tildacdn.ink/tild3733-6364-4134-b662-633834313832/computer_workplace_s.svg",
 	});
 
-	onMount(() => {
-		const type = () => {
-			if (isTyping) {
-				currentText = texts[currentIndex].slice(0, charIndex + 1);
-				charIndex++;
-				if (charIndex === texts[currentIndex].length) {
-					isTyping = false;
-					setTimeout(type, 2000); // pause after typing
-				} else {
-					setTimeout(type, 100); // typing speed
-				}
-			} else {
-				currentText = texts[currentIndex].slice(0, charIndex);
-				charIndex--;
-				if (charIndex < 0) {
-					isTyping = true;
-					currentIndex = (currentIndex + 1) % texts.length;
-					setTimeout(type, 500); // pause after deleting
-				} else {
-					setTimeout(type, 50); // deleting speed
-				}
-			}
-		};
-		type();
-	});
 
-	let activeMenu = $state(false);
 </script>
 
-<header
-	class={clsx(
-		"flex items-center justify-between min-h-32 md:min-h-[159px] px-8 md:px-[40px] absolute z-10 inset-x-0 text-white transition-all duration-300",
-		activeMenu ? "bg-black fixed" : "bg-black/80",
-	)}
->
-	<SimpleButton href="/">
-		<img
-			width="150"
-			src="https://static.tildacdn.ink/tild6235-6233-4134-a136-643966303263/logo3-removebg-previ.png"
-			alt=""
-		/>
-	</SimpleButton>
-
-	<SimpleButton onclick={() => (activeMenu = !activeMenu)}>
-		{#if activeMenu}
-			<X size="38px" />
-		{:else}
-			<Menu size="38px" />
-		{/if}
-	</SimpleButton>
-
-	{#if activeMenu}
-		<div
-			transition:fade={{ duration: 200 }}
-			class="fixed inset-0 bg-black/60 top-32 md:top-[150px]"
-			onclick={() => (activeMenu = false)}
-		/>
-		<div
-			transition:fly={{ y: -20, duration: 200 }}
-			class="noscroll text-center fixed top-32 md:top-[150px] inset-x-0 z-10 bg-black px-5 md:px-[20px] py-7.5 md:py-[30px]"
-		>
-			<div class="grid gap-[20px] mb-[55px] text-[24px]">
-				<SimpleButton href="/about">About</SimpleButton>
-				<SimpleButton href="/rooms">Rooms</SimpleButton>
-				<SimpleButton href="/near">Near us</SimpleButton>
-				<SimpleButton href="/tours">Tours</SimpleButton>
-			</div>
-			<div class="max-w-[583px] m-auto text-[20px] font-light">
-				Our address: 12 Alley Ng. 445 Đ. Lạc Long Quân, Xuân La, Tây Hồ, Hà Nội,
-				100000, Viet
-			</div>
-		</div>
-	{/if}
-</header>
-
-{#if !activeMenu}
-	<SearchHeader />
-{/if}
-
 <section
-	class="min-h-screen grid place-items-center text-white pt-52 md:pt-[250px] relative pb-[100px] px-5 grid-cols-1 lg:grid-cols-2"
+	class="min-h-screen flex justify-center items-center text-white pt-52 md:pt-[250px] relative pb-[100px] px-5 flex-wrap gap-[50px]"
 	style={"background-image: url(https://optim.tildacdn.ink/tild6335-3966-4163-a330-363534383636/-/format/webp/z5448003676674_f83b3.jpg.webp); no-repeat right right fixed; background-size: cover;"}
 >
 	<div
@@ -191,7 +112,7 @@
 		</h2>
 
 		<div class="uppercase text-[40px] mt-16 md:mt-[100px] max-w-[600px]">
-			<p>{currentText}<span class="cursor">|</span></p>
+			<TypingAnimation {texts} />
 		</div>
 	</div>
 
@@ -211,7 +132,7 @@
 >
 	<div class="text-[14px] mb-5">Welcome to TUNA Homestay!</div>
 	<div
-		class="text-[26px] max-w-[600px] m-auto text-center font-light mb-8 md:mb-10"
+		class="text-[26px] max-w-[600px] lg:max-w-[900px] m-auto text-center font-light mb-8 md:mb-10"
 	>
 		We are thrilled to have you stay with us! Our guest house features <strong
 			class="font-bold">4 cozy rooms</strong
@@ -329,7 +250,7 @@
 	</div>
 </section>
 <svg
-	class="w-full rotate-180 flip-horizontal"
+	class="w-full rotate-180 flip-horizontal mb-[20px]"
 	style="height:4vw;fill:#3e3e39;"
 	xmlns="http://www.w3.org/2000/svg"
 	viewBox="0 0 1280 200"
@@ -338,73 +259,7 @@
 	<path d="M1280 200H0V0l1280 195.5v4.5z"></path>
 </svg>
 
-<section
-	class="bg-[#252422] py-[75px] md:py-[100px] px-5 text-white text-center grid justify-center"
->
-	<NameBlock
-		name="Contacts"
-		description="To book a room and for any questions, please call us at: <br/>+84 83 293 88 88"
-	/>
-
-	<div
-		class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 md:gap-[50px] max-w-[1200px]"
-	>
-		<div class="flex flex-col items-center">
-			<img
-				src="https://static.tildacdn.ink/tild3862-3561-4136-a361-343730666531/vector.svg"
-				alt=""
-				class="mb-7.5 md:mb-[30px] w-15 h-15 md:w-[60px] md:h-[60px]"
-			/>
-			<div class="mb-5 md:mb-[20px] text-[25px]">Contact</div>
-			<div class="text-[16px] font-light text-center">
-				Our Second Number: Our Second Number:<br />+84 85 586 71 86<br /><br
-				/>Email:<br />tunahomestay01@gmail.com
-			</div>
-		</div>
-
-		<div class="flex flex-col items-center">
-			<img
-				src="https://static.tildacdn.ink/tild3862-3561-4136-a361-343730666531/vector.svg"
-				alt=""
-				class="mb-7.5 md:mb-[30px] w-15 h-15 md:w-[60px] md:h-[60px]"
-			/>
-			<div class="mb-5 md:mb-[20px] text-[25px]">Address</div>
-			<div class="text-[16px] font-light text-center">
-				12 Alley Ng. 445 Đ. Lạc Long Quân, Xuân La, Tây Hồ, Hà Nội, 100000,
-				Vietnam
-			</div>
-		</div>
-
-		<div class="flex flex-col items-center">
-			<img
-				src="https://static.tildacdn.ink/tild3862-3561-4136-a361-343730666531/vector.svg"
-				alt=""
-				class="mb-7.5 md:mb-[30px] w-15 h-15 md:w-[60px] md:h-[60px]"
-			/>
-			<div class="mb-5 md:mb-[20px] text-[25px]">How to find us</div>
-			<div class="text-[16px] font-light text-center">
-				We are located in the Western part of the city. If you are coming from
-				the airport, take the 90th bus (until the Qua Nga 3 Xuan La 70m - Lac
-				Long Quan (Ho Tay)).
-			</div>
-		</div>
-	</div>
-</section>
-
 <style>
-	.cursor {
-		animation: blink 1s infinite;
-	}
-	@keyframes blink {
-		0%,
-		50% {
-			opacity: 1;
-		}
-		51%,
-		100% {
-			opacity: 0;
-		}
-	}
 	.flip-horizontal {
 		transform: scaleX(-1);
 	}

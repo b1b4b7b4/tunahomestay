@@ -22,3 +22,7 @@ body {
 	color: black;
 	background-color: #fefcf2;
 }
+
+.flip-horizontal {
+	transform: scaleX(-1);
+}

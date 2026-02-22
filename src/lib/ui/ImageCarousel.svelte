@@ -4,8 +4,10 @@
 	import { ArrowLeft, ArrowRight } from "@lucide/svelte";
 	import SimpleButton from "./SimpleButton.svelte";
 
+	const { images = [], autoplay = true } = $props();
+
 	let options = { loop: false };
-	let plugins = [Autoplay()];
+	let plugins = [...(autoplay ? [Autoplay()] : [])];
 
 	let emblaApi: any;
 	let selectedIndex = $state(0);
@@ -21,8 +23,6 @@
 			selectedIndex = emblaApi.selectedScrollSnap();
 		});
 	};
-
-	const { images = [] } = $props();
 </script>
 
 <div>

@@ -1,6 +1,9 @@
 <script lang="ts">
 	import "./layout.css";
 	import favicon from "$lib/assets/favicon.svg";
+	import Header from "$lib/components/Header.svelte";
+	import { fade } from "svelte/transition";
+	import Contact from "$lib/components/Contact.svelte";
 
 	let { children } = $props();
 </script>
@@ -26,4 +29,11 @@
 		type="image/x-icon"
 	/>
 </svelte:head>
-{@render children()}
+
+<Header />
+
+<div transition:fade={{ duration: 500 }}>
+	{@render children()}
+</div>
+
+<Contact />

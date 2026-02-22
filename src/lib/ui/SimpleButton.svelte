@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from "$app/state";
 	import clsx from "clsx";
 	const {
 		c = "",
@@ -28,6 +29,7 @@
 			"hover:scale-105 transition-all duration-300 ease-in-out active:scale-95 cursor-pointer",
 			variants[variant],
 			c,
+			page.url.pathname == href && "text-[#eb5f29]",
 		)}
 		{...rest}
 	>
