@@ -7,11 +7,16 @@
 		id = undefined,
 		reg = null,
 		isDate = false,
+		isTextarea = false,
 		options = [],
+		c = "",
 		...rest
 	} = $props();
 
-	const inputClass = "px-4.5 min-h-12.5 bg-[#f0f0f0] border-0 focus:ring-1 ring-black/20 text-black";
+	const inputClass = clsx(
+		"px-4.5 min-h-12.5 bg-[#f0f0f0] border-0 focus:ring-1 ring-black/20 text-black",
+		c,
+	);
 
 	function applyReg() {
 		if (reg) {
@@ -33,10 +38,20 @@
 				class={inputClass}
 				{...rest}
 			>
-			{#each options as option}
-				<option value={typeof option === 'object' ? option.value : option}>{typeof option === 'object' ? option.label : option}</option>
-			{/each}
+				{#each options as option}
+					<option value={typeof option === "object" ? option.value : option}
+						>{typeof option === "object" ? option.label : option}</option
+					>
+				{/each}
 			</select>
+		{:else if isTextarea}
+			<textarea
+				id={id || label.toLowerCase().replace(/\s+/g, "-")}
+				bind:value
+				class={inputClass}
+				oninput={applyReg}
+				{...rest}
+			></textarea>
 		{:else}
 			<input
 				id={id || label.toLowerCase().replace(/\s+/g, "-")}
@@ -48,26 +63,24 @@
 			/>
 		{/if}
 	</div>
+{:else if options && options.length > 0}
+	<select {id} bind:value class={inputClass} {...rest}>
+		{#each options as option}
+			<option value={typeof option === "object" ? option.value : option}
+				>{typeof option === "object" ? option.label : option}</option
+			>
+		{/each}
+	</select>
+{:else if isTextarea}
+	<textarea {id} bind:value class={inputClass} oninput={applyReg} {...rest}
+	></textarea>
 {:else}
-	{#if options && options.length > 0}
-		<select
-			{id}
-			bind:value
-			class={inputClass}
-			{...rest}
-		>
-			{#each options as option}
-				<option value={typeof option === 'object' ? option.value : option}>{typeof option === 'object' ? option.label : option}</option>
-			{/each}
-		</select>
-	{:else}
-		<input
-			{id}
-			type={isDate ? "date" : "text"}
-			bind:value
-			class={inputClass}
-			oninput={isDate ? undefined : applyReg}
-			{...rest}
-		/>
-	{/if}
+	<input
+		{id}
+		type={isDate ? "date" : "text"}
+		bind:value
+		class={inputClass}
+		oninput={isDate ? undefined : applyReg}
+		{...rest}
+	/>
 {/if}
