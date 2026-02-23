@@ -3,6 +3,8 @@
 	import clsx from "clsx";
 	import TypingAnimation from "$lib/ui/TypingAnimation.svelte";
 	import Field from "$lib/ui/Field.svelte";
+	import { enhance } from "$app/forms";
+	import toast from "svelte-french-toast";
 
 	const toursList = [
 		{
@@ -152,16 +154,28 @@
 			Tell us about your choice and we'll get back to you
 		</div>
 
-		<form class="grid gap-5 my-7.5 md:my-[30px] max-w-[500px] m-auto">
-			<Field placeholder="Your email" />
-			<Field placeholder="Name" />
+		<form class="grid gap-5 my-7.5 md:my-[30px] max-w-[500px] m-auto" action="?/reserve" method="POST" use:enhance={({ formData, action, cancel, submitter }) => {
+			const loadingToast = toast.loading('Submitting reservation...');
+		return async ({ update, result }) => {
+			await update({ reset: result.type === 'success' });
+			if (result.type === 'success') {
+				toast.success('Tour reservation request sent!', { id: loadingToast });
+			} else {
+				toast.error('Failed to send reservation request', { id: loadingToast });
+			}
+		};
+		}}>
+			<Field name="email" placeholder="Your email" required />
+			<Field name="name" placeholder="Name" required />
 			<Field
+				name="message"
 				placeholder="What tour would you like to join"
 				isTextarea
 				c="pt-[16px] min-h-[100px]"
+				required
 			/>
 
-			<SimpleButton variant="primary" c="uppercase text-[16px]">
+			<SimpleButton variant="primary" c="uppercase text-[16px]" type="submit">
 				Book a tour
 			</SimpleButton>
 		</form>

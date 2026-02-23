@@ -8,6 +8,7 @@
 	import { onMount } from "svelte";
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
 	import ViewAnimation from "$lib/ui/ViewAnimation.svelte";
+	import { Toaster } from "svelte-french-toast";
 
 	let { children } = $props();
 	let showScrollUp = $state(false);
@@ -24,6 +25,8 @@
 		window.scrollTo({ top: 0, behavior: "smooth" });
 	};
 </script>
+
+<Toaster />
 
 <svelte:head>
 	<title>Tuna Homestay Hanoi &amp; Experience</title>

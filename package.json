@@ -23,6 +23,7 @@
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.1.18",
 		"@types/node": "^24",
+		"@types/nodemailer": "^7.0.11",
 		"drizzle-kit": "^0.31.8",
 		"drizzle-orm": "^0.45.1",
 		"svelte": "^5.51.0",
@@ -36,6 +37,8 @@
 		"@neondatabase/serverless": "^1.0.2",
 		"clsx": "^2.1.1",
 		"embla-carousel-autoplay": "^8.6.0",
-		"embla-carousel-svelte": "^8.6.0"
+		"embla-carousel-svelte": "^8.6.0",
+		"nodemailer": "^8.0.1",
+		"svelte-french-toast": "^1.2.0"
 	}
 }
