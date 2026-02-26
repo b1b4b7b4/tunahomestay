@@ -1,76 +1,17 @@
-<script>
+<script lang="ts">
 	import { page } from "$app/state";
-	import { differetTypes } from "$lib";
+	import type { PageData } from "./$types";
 	import NearTypes from "$lib/components/NearTypes.svelte";
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
 	import { ChevronsDown } from "@lucide/svelte";
 	import clsx from "clsx";
 	import { onMount } from "svelte";
 
+	let { data }: { data: PageData } = $props();
 	let scrollY = $state(0);
 
-	const list = [
-		{
-			title: "West Lake (Hồ Tây)",
-			image:
-				"https://optim.tildacdn.ink/tild3764-6134-4366-b235-613132663432/-/resize/800x600/-/format/webp/west_lake.jpg.webp",
-		},
-		{
-			title: "Tran Quoc Pagoda (Chùa Trấn Quốc)",
-			image:
-				"https://optim.tildacdn.ink/tild3433-3764-4331-b535-373030336535/-/resize/800x600/-/format/webp/pagoda.jpg.webp",
-		},
-		{
-			title: "Quang Ba Flower Market",
-			image:
-				"https://optim.tildacdn.ink/tild6537-3931-4062-b261-373335663562/-/resize/800x600/-/format/webp/flower.jpg.webp",
-		},
-		{
-			title: "Cafes and Restaurants on Xuân Diệu Street",
-			image:
-				"https://optim.tildacdn.ink/tild6231-3931-4337-a466-633935306630/-/resize/800x800/-/format/webp/food.jpg.webp",
-		},
-		{
-			title: "Two Dragons of Tây Hồ (Tượng 2 con Rồng Hồ Tây)",
-			image:
-				"https://optim.tildacdn.ink/tild6135-6364-4630-b939-353934626230/-/resize/800x800/-/format/webp/2dr.jpg.webp",
-		},
-		{
-			title: "Hanoi Old Quarter (Phố Cổ Hà Nội)",
-			image:
-				"https://optim.tildacdn.ink/tild3937-3738-4232-a133-653764396332/-/resize/800x800/-/format/webp/old_q.jpg.webp",
-		},
-		{
-			title: "Hoan Kiem Lake (Hồ Hoàn Kiếm)",
-			image:
-				"https://optim.tildacdn.ink/tild3165-3338-4634-b738-336566373166/-/resize/800x800/-/format/webp/lake__2.jpg.webp",
-		},
-		{
-			title: "Tay Ho Temple (Phủ Tây Hồ)",
-			image:
-				"https://optim.tildacdn.ink/tild3665-3631-4631-b763-306631326539/-/resize/800x800/-/format/webp/temple_th.jpg.webp",
-		},
-		{
-			title: "Bookworm Hanoi",
-			image:
-				"https://optim.tildacdn.ink/tild3338-6566-4434-a334-363731386339/-/resize/800x800/-/format/webp/bookworm.jpg.webp",
-		},
-		{
-			title: "The Hanoi Ceramic Mosaic Mural",
-			image:
-				"https://optim.tildacdn.ink/tild6661-6435-4437-a466-336564323264/-/resize/800x800/-/format/webp/mural2.jpg.webp",
-		},
-		{
-			title: "Ho Chi Minh Mausoleum (Lăng Chủ tịch Hồ Chí Minh)",
-			image:
-				"https://optim.tildacdn.ink/tild6364-3463-4135-b336-323564333339/-/resize/800x800/-/format/webp/Mausoleum.jpg.webp",
-		},
-		{
-			title: "Temple of Literature (Văn Miếu - Quốc Tử Giám)",
-			image:
-				"https://optim.tildacdn.ink/tild3837-6134-4363-b233-356364386230/-/resize/800x800/-/format/webp/liteer.jpg.webp",
-		},
-	];
+	const nearList = data.nearList;
+	const nearPage = data.nearPage;
 
 	onMount(() => {
 		const handleScroll = () => {
@@ -93,7 +34,7 @@
 		playsinline
 	>
 		<source
-			src="https://videos.pexels.com/video-files/20458617/20458617-uhd_3840_2160_24fps.mp4"
+			src={nearPage.hero.videoUrl}
 			type="video/mp4"
 		/>
 	</video>
@@ -103,8 +44,8 @@
 	></div>
 
 	<div class="uppercase text-center z-1 text-shadow-lg">
-		<div class="py-[34px] text-[68px] font-bold">I love hanoi</div>
-		<div class="text-[16px]">DISCOVER OUR CITY WITH TUNA HOMESTAY</div>
+		<div class="py-[34px] text-[68px] font-bold">{nearPage.hero.title}</div>
+		<div class="text-[16px]">{nearPage.hero.subtitle}</div>
 	</div>
 
 	<div class="z-1 absolute mx-auto bottom-12 bounce">
@@ -113,12 +54,12 @@
 </div>
 
 <div class="container max-w-[1200px] m-auto px-5">
-	<NearTypes />
+	<NearTypes differetTypes={data.differetTypes} />
 
 	<div
 		class="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-[40px]"
 	>
-		{#each list as item}
+		{#each nearList as item}
 			<div
 				style="--bg-image: url({item.image});"
 				class={clsx(
@@ -139,8 +80,8 @@
 				<SimpleButton
 					variant="primary"
 					c="uppercase text-[14px] shadow-xl absolute left-1/2 -translate-x-1/2 transition-all duration-200 opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto z-1 group-hover:translate-y-12 md:group-hover:translate-y-[60px]"
-					>view more
-				</SimpleButton>
+					>{nearPage.viewMoreButton}</SimpleButton
+				>
 			</div>
 		{/each}
 	</div>

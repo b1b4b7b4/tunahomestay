@@ -1,52 +1,15 @@
 <script lang="ts">
+	import type { PageData } from "./$types";
 	import TunaMap from "$lib/components/TunaMap.svelte";
 	import ImageCarousel from "$lib/ui/ImageCarousel.svelte";
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
 	import ViewAnimation from "$lib/ui/ViewAnimation.svelte";
 	import clsx from "clsx";
 
-	const roomsList = [
-		{
-			title: "FEMALE DORMITORY",
-			description:
-				"The women's room in the hostel is designed in light, cozy tones, creating a sense of homely comfort and tranquility. The room features four bunk beds, each equipped with a comfortable mattress, clean linens, and a personal curtain for privacy. Next to each bed, there is an individual night light and a power outlet for guests' convenience.",
-			image: [
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-			],
-		},
-		{
-			title: "MIXED DORMITORY WITH PRIVATE BATHROOM",
-			description:
-				"Our cozy mixed dormitory accommodates eight guests and is equipped with four bunk beds featuring high-quality mattresses and fresh linens. Each guest can enjoy the convenience of an individual shower and toilet, providing necessary privacy and comfort. <br/> The room is fitted with air conditioning to maintain an optimal climate regardless of the weather. The modern interior of the room promotes relaxation and rest. Additionally, guests have access to free Wi-Fi, personal safes for securing valuables, and bedside night lighting.",
-			image: [
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-			],
-		},
-		{
-			title: "MALE DORMITORY",
-			description:
-				"The men's room in the hostel accommodates six people and includes three bunk beds. One of these beds is designed as a double bed, adding a unique and comfortable element to the room. Each bed is equipped with a comfortable mattress and fresh linens, as well as individual lamps and power outlets.<br/> vThe room also features air conditioning, ensuring a comfortable stay even during hot weather. For convenience and relaxation, there is a comfortable chair where guests can unwind or read a book.",
-			image: [
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-			],
-		},
-		{
-			title: "MIXED DORMITORY",
-			description:
-				"The mixed room in the hostel accommodates eight people and includes four bunk beds, each equipped with comfortable mattresses and fresh linens. This space is ideal for both men and women, providing a comfortable place for rest and interaction with other guests.<br/> The room's interior has been recently updated and is designed in a modern style with a focus on functionality and style. Large windows fill the room with natural light, making it brighter and more welcoming.",
-			image: [
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-				"https://optim.tildacdn.ink/tild3665-6465-4632-b434-376663353064/-/format/webp/z5423169899372_09ca3.jpg.webp",
-			],
-		},
-	];
+	let { data }: { data: PageData } = $props();
+
+	const roomsList = data.roomsList;
+	const roomsPage = data.roomsPage;
 </script>
 
 <ViewAnimation yFrom={30} duration={800}>
@@ -63,9 +26,9 @@
 			</svg>
 			<div class="min-h-[184px] text-white text-center">
 				<div class="mb-[50px] text-[19px] tracking-wider uppercase">
-					Tuna Homestay & Experience
+					{roomsPage.hero.subtitle}
 				</div>
-				<div class="text-[72px] font-bold">Book a room</div>
+				<div class="text-[72px] font-bold">{roomsPage.hero.title}</div>
 			</div>
 			<svg
 				style="fill:#fffcf2;"
@@ -100,8 +63,8 @@
 					<div class="text-[16px] font-light">{@html room.description}</div>
 					<div class="mt-12.5 lg:mt-[50px]">
 						<SimpleButton variant="primary" c="uppercase text-[16px] shadow-xl"
-							>book a room
-						</SimpleButton>
+							>{roomsPage.bookButton}</SimpleButton
+						>
 					</div>
 				</div>
 			</div>
@@ -109,4 +72,4 @@
 	{/each}
 </div>
 
-<TunaMap />
+<TunaMap mapConfig={data.mapConfig} />

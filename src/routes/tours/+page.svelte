@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+	import type { PageData } from "./$types";
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
 	import clsx from "clsx";
 	import TypingAnimation from "$lib/ui/TypingAnimation.svelte";
@@ -6,50 +7,11 @@
 	import { enhance } from "$app/forms";
 	import toast from "svelte-french-toast";
 
-	const toursList = [
-		{
-			title: "MAGNIFICENT HA LONG CRUISE",
-			description: "1 Night Cruise - 1 Night Hotel",
-			image:
-				"https://optim.tildacdn.ink/tild6537-6262-4666-a635-356666643566/-/format/webp/pexels-ilitafamily-5.jpg.webp",
-			small: false,
-		},
-		{
-			title: "HANOI CITY FULL DAY TOUR",
-			description: "1 Day",
-			image:
-				"https://optim.tildacdn.ink/tild3064-3762-4261-a364-306437646131/-/format/webp/Inside-of-St-Josephs.jpg.webp",
-			small: false,
-		},
-		{
-			title: "SAPA FANSIPAN PEAK 3143m",
-			description: "2 Days - 1 Night Hotel",
-			image:
-				"https://optim.tildacdn.ink/tild6665-6536-4238-b766-623336633332/-/format/webp/pexels-quang-nguyen-.jpg.webp",
-			small: false,
-		},
-		{
-			title: "CAT BA ISLAND TOUR",
-			description: "3 Days 2 Nights",
-			image:
-				"https://optim.tildacdn.ink/tild6633-6539-4238-a464-656361313638/-/format/webp/Flamingo_CatBa_Beach.jpg.webp",
-			small: true,
-		},
-		{
-			title: "ONE-DAY NINH-BINH ADVENTURE",
-			description: "1 Day",
-			image:
-				"https://optim.tildacdn.ink/tild3839-3163-4561-a262-616530666136/-/format/webp/31098_1_1.jpg.webp",
-			small: true,
-		},
-		{
-			title: "HA GIANG LOOP",
-			description: "4 DAYS 3 NIGHTS",
-			image:
-				"https://optim.tildacdn.ink/tild3233-3338-4532-b737-356239623834/-/format/webp/ha-giang-featured_1.jpg.webp",
-			small: false,
-		},
-	];
+	let { data }: { data: PageData } = $props();
+
+	const toursList = data.toursList;
+	const toursPage = data.toursPage;
+	const t = toursPage;
 
 	function currentYear() {
 		return new Date().getFullYear();
@@ -58,25 +20,19 @@
 
 <div class="container max-w-[1200px] m-auto pt-[200px] px-5">
 	<div class="text-5xl md:text-[75px] mb-12 md:mb-[60px] font-bold uppercase">
-		Experience tours with <br />
-		<span class="text-[#eb5f29]">TUNA HOMESTAY</span>
+		{t.hero.title} <br />
+		<span class="text-[#eb5f29]">{t.hero.homestayName}</span>
 	</div>
 
 	<div class="mb-12 md:mb-[60px] font-light text-[25px]">
-		<TypingAnimation
-			texts={[
-				"We offer fantastic motorbike adventures,",
-				"Captivating sightseeing tours,",
-				"and trips to unique locations.",
-			]}
-		/>
+		<TypingAnimation texts={t.hero.typingTexts} />
 	</div>
 
 	<SimpleButton
 		variant="primary"
 		c="uppercase text-[16px] shadow-xl mb-24 md:mb-[120px]"
 	>
-		book a toor
+		{t.hero.bookButton}
 	</SimpleButton>
 
 	<h1 class="uppercase text-4xl md:text-[52px] mb-24 md:mb-[120px]">
@@ -140,7 +96,7 @@
 </svg>
 <div
 	class="min-h-screen grid place-items-center text-white relative"
-	style="background-image: url(https://optim.tildacdn.ink/tild6137-6463-4162-a534-333035323435/-/format/webp/pexels-quang-huy-249.jpg.webp); background-size: cover; background-position: center; background-repeat: no-repeat;"
+	style="background-image: url({t.cta.backgroundImage}); background-size: cover; background-position: center; background-repeat: no-repeat;"
 >
 	<div
 		class="absolute inset-0"
@@ -148,10 +104,10 @@
 	></div>
 	<div class="z-1 text-center px-5">
 		<div class="text-4xl md:text-[52px] mb-5 md:mb-[20px] font-bold uppercase">
-			Like it ? Reserve a tour!
+			{t.cta.title}
 		</div>
 		<div class="text-xl md:text-[30px] mb-8 md:mb-[50px] max-w-[480px] m-auto">
-			Tell us about your choice and we'll get back to you
+			{t.cta.description}
 		</div>
 
 		<form class="grid gap-5 my-7.5 md:my-[30px] max-w-[500px] m-auto" action="?/reserve" method="POST" use:enhance={({ formData, action, cancel, submitter }) => {
@@ -165,24 +121,24 @@
 			}
 		};
 		}}>
-			<Field name="email" placeholder="Your email" required />
-			<Field name="name" placeholder="Name" required />
+			<Field name="email" placeholder={t.cta.form.emailPlaceholder} required />
+			<Field name="email" placeholder={t.cta.form.namePlaceholder} required />
 			<Field
 				name="message"
-				placeholder="What tour would you like to join"
+				placeholder={t.cta.form.messagePlaceholder}
 				isTextarea
 				c="pt-[16px] min-h-[100px]"
 				required
 			/>
 
 			<SimpleButton variant="primary" c="uppercase text-[16px]" type="submit">
-				Book a tour
+				{t.cta.submitButton}
 			</SimpleButton>
 		</form>
 
 		<div class="text-[12px] font-light text-center opacity-85">
-			You agree with our <a href="/terms" class="underline"
-				>Terms and Conditions</a
+			{t.cta.termsText} <a href="/terms" class="underline"
+				>{t.cta.termsLink}</a
 			>
 		</div>
 	</div>

@@ -9,8 +9,9 @@
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
 	import ViewAnimation from "$lib/ui/ViewAnimation.svelte";
 	import { Toaster } from "svelte-french-toast";
+	import type { LayoutData } from "./$types";
 
-	let { children } = $props();
+	let { children, data }: { children: any; data: LayoutData } = $props();
 	let showScrollUp = $state(false);
 
 	onMount(() => {
@@ -57,7 +58,7 @@
 </div>
 
 <ViewAnimation yFrom={50} duration={700}>
-	<Contact />
+	<Contact contacts={data.contacts} />
 </ViewAnimation>
 
 {#if showScrollUp}

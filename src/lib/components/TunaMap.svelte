@@ -1,21 +1,20 @@
-<script>
+<script lang="ts">
 	import { onMount } from "svelte";
 
-	const { ...rest } = $props();
+	let { mapConfig }: { mapConfig: { center: [number, number]; zoom: number; marker: { position: [number, number]; popup: string }; tileUrl: string; attribution: string } } = $props();
 
 	onMount(() => {
 		// @ts-ignore
-		const map = L.map("map").setView([21.0634, 105.8195], 15);
+		const map = L.map("map").setView(mapConfig.center, mapConfig.zoom);
 		// @ts-ignore
-		L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+		L.tileLayer(mapConfig.tileUrl, {
 			maxZoom: 19,
-			attribution:
-				'&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+			attribution: mapConfig.attribution,
 		}).addTo(map);
 		// @ts-ignore
-		L.marker([21.059257153168925, 105.80826036441773])
+		L.marker(mapConfig.marker.position)
 			.addTo(map)
-			.bindPopup("Tuna Homestay & Experience")
+			.bindPopup(mapConfig.marker.popup)
 			.openPopup();
 	});
 </script>
@@ -24,5 +23,4 @@
 	id="map"
 	class="isolate"
 	style="height: 350px; width: 100%;"
-	{...rest}
 ></div>

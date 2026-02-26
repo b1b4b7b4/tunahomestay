@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
 	import { page } from "$app/state";
-	import { differetTypes } from "$lib";
 	import SimpleButton from "$lib/ui/SimpleButton.svelte";
 	import clsx from "clsx";
+
+	let { differetTypes }: { differetTypes: { title: string; href: string }[] } = $props();
 </script>
 
 <div

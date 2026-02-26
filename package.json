@@ -13,7 +13,9 @@
 		"db:push": "drizzle-kit push",
 		"db:generate": "drizzle-kit generate",
 		"db:migrate": "drizzle-kit migrate",
-		"db:studio": "drizzle-kit studio"
+		"db:studio": "drizzle-kit studio",
+		"db:seed": "tsx src/lib/server/db/seed.ts",
+		"db:reseed": "drizzle-kit push && tsx src/lib/server/db/seed.ts"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
@@ -29,6 +31,7 @@
 		"svelte": "^5.51.0",
 		"svelte-check": "^4.3.6",
 		"tailwindcss": "^4.1.18",
+		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
 		"vite": "^7.3.1"
 	},
@@ -36,6 +39,7 @@
 		"@lucide/svelte": "^0.575.0",
 		"@neondatabase/serverless": "^1.0.2",
 		"clsx": "^2.1.1",
+		"dotenv": "^17.3.1",
 		"embla-carousel-autoplay": "^8.6.0",
 		"embla-carousel-svelte": "^8.6.0",
 		"nodemailer": "^8.0.1",

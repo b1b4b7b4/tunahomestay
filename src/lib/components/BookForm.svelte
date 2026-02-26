@@ -6,6 +6,8 @@
 	import { enhance } from "$app/forms";
 	import toast from "svelte-french-toast";
 
+	let { pricing = { pricePerNight: 200_000, currency: "VND" } }: { pricing?: { pricePerNight: number; currency: string } } = $props();
+
 	let adults = $state("");
 	let nights = $state("");
 	let phone = $state("");
@@ -95,7 +97,7 @@
 
 	<div class="flex gap-2 text-[18px] font-bold">
 		Total cost of your stay:
-		<DynamicNumber number={calculatePrice(adults, nights)} duration={200} />
+		<DynamicNumber number={calculatePrice(adults, nights, pricing.pricePerNight)} duration={200} />
 	</div>
 
 	<SimpleButton
