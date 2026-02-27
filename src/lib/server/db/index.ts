@@ -5,6 +5,6 @@ import { env } from '$env/dynamic/private';
 
 if (!env.DATABASE_URL) throw new Error('DATABASE_URL is not set');
 
-const client = neon(env.DATABASE_URL);
+const client = neon(env.DATABASE_URL ?? "postgres://localhost:5432/tuna");
 
 export const db = drizzle(client, { schema });
